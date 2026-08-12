@@ -1,3 +1,4 @@
 opencv-python>=4.8.0
 pygrabber>=0.2; sys_platform == 'win32'
+mediapipe
 python-dotenv>=1.0.0

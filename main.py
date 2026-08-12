@@ -5,12 +5,13 @@ import argparse
 import os
 from dotenv import load_dotenv
 from src.camera import CameraManager
+from src.hand_detector import HandDetector
 
 def parse_args():
     """
     Parses command-line arguments.
     """
-    parser = argparse.ArgumentParser(description="AirDJ - Módulo 1: Adquisición de Video")
+    parser = argparse.ArgumentParser(description="AirDJ - Módulo 1 y 2: Adquisición y Detección")
     parser.add_argument(
         "-c", "--camera",
         type=int,
@@ -77,6 +78,9 @@ def main():
         print(f"[ERROR] No se pudo abrir la camara con indice {camera_index}. Verifica la conexion.", file=sys.stderr)
         sys.exit(1)
 
+    # Initialize the Hand Detector (Module 2)
+    detector = HandDetector(static_image_mode=False, max_num_hands=1)
+
     # Retrieve camera hardware properties
     props = camera.get_properties()
     width = props["width"]
@@ -98,7 +102,7 @@ def main():
         win_width, win_height = 1024, 768
 
     # Create named window with WINDOW_NORMAL so it can be resized/maximized
-    window_name = "AirDJ - Adquisicion de Video"
+    window_name = "AirDJ - Deteccion de Mano y Landmarks"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(window_name, win_width, win_height)
 
@@ -120,6 +124,13 @@ def main():
                 time.sleep(0.01)
                 continue
 
+            # Execute hand detection (Module 2)
+            result = detector.detect(frame)
+
+            # Draw landmarks and connections on frame if hand is detected
+            if result.detected:
+                detector.draw_landmarks(frame, result, draw_center=True)
+
             # Increment frame counter for processing FPS calculation
             frame_count += 1
 
@@ -133,7 +144,7 @@ def main():
             # --- RENDER OVERLAY HUD (Rich Aesthetics) ---
             # Create a semi-transparent background box for the HUD to guarantee readability
             hud_x1, hud_y1 = 15, 15
-            hud_x2, hud_y2 = 360, 190
+            hud_x2, hud_y2 = 380, 215
             
             overlay = frame.copy()
             cv2.rectangle(overlay, (hud_x1, hud_y1), (hud_x2, hud_y2), (0, 0, 0), -1)
@@ -147,10 +158,11 @@ def main():
             color = (255, 255, 255) # White text
 
             lines = [
-                "AirDJ - Modulo 1",
+                "AirDJ - Modulos 1 y 2",
                 f"Resolucion: {width} x {height}",
                 f"FPS Camara: {camera_fps if camera_fps > 0 else 'N/A'}",
                 f"FPS Procesamiento: {processing_fps:.1f}",
+                f"Estado: {'MANO DETECTADA' if result.detected else 'SIN MANO'}",
                 "F = pantalla completa",
                 "Q = salir"
             ]
@@ -160,6 +172,9 @@ def main():
             for i, line in enumerate(lines):
                 # Accentuate the first title line with a different color (cyan-ish)
                 line_color = (255, 255, 100) if i == 0 else color
+                # Accentuate the Hand Detection State: Green if detected, Red if not
+                if i == 4:
+                    line_color = (0, 255, 0) if result.detected else (0, 0, 255)
                 # Accentuate the exit prompt in yellow/orange
                 if i == len(lines) - 1:
                     line_color = (100, 100, 255)
@@ -197,8 +212,10 @@ def main():
     finally:
         # Resource cleanup
         camera.release()
+        detector.close()
         cv2.destroyAllWindows()
         print("Recursos liberados. Programa finalizado correctamente.")
+
 
 if __name__ == "__main__":
     main()

@@ -15,6 +15,8 @@ __pycache__/
 *.swp
 *.swo
 
+# MediaPipe model assets
+hand_landmarker.task
 # Environment configurations
 .env
 
