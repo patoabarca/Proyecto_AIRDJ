@@ -17,3 +17,6 @@ __pycache__/
 
 # MediaPipe model assets
 hand_landmarker.task
+# Environment configurations
+.env
+
