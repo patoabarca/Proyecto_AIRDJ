@@ -2,6 +2,8 @@ import cv2
 import time
 import sys
 import argparse
+import os
+from dotenv import load_dotenv
 from src.camera import CameraManager
 
 def parse_args():
@@ -18,9 +20,22 @@ def parse_args():
     return parser.parse_args()
 
 def main():
+    # Load environment variables from .env file
+    load_dotenv()
+
     # Parse CLI arguments
     args = parse_args()
     camera_index = args.camera
+
+    # If camera index wasn't specified via CLI, check environment variable
+    if camera_index is None:
+        env_cam_index = os.getenv("DEFAULT_CAMERA_INDEX")
+        if env_cam_index is not None and env_cam_index.strip() != "":
+            try:
+                camera_index = int(env_cam_index)
+                print(f"Usando camara por defecto desde .env: {camera_index}")
+            except ValueError:
+                pass
 
     # If camera index wasn't specified via CLI, detect available webcams
     if camera_index is None:
@@ -73,10 +88,19 @@ def main():
     print(f"FPS de la Cámara (Hardware): {camera_fps}")
     print("---------------------------------------")
 
+    # Retrieve default window dimensions from environment variables
+    width_str = os.getenv("DEFAULT_WINDOW_WIDTH", "1024")
+    height_str = os.getenv("DEFAULT_WINDOW_HEIGHT", "768")
+    try:
+        win_width = int(width_str)
+        win_height = int(height_str)
+    except ValueError:
+        win_width, win_height = 1024, 768
+
     # Create named window with WINDOW_NORMAL so it can be resized/maximized
     window_name = "AirDJ - Adquisicion de Video"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-    cv2.resizeWindow(window_name, 1024, 768)
+    cv2.resizeWindow(window_name, win_width, win_height)
 
     # Variables for calculation of processing FPS
     frame_count = 0
