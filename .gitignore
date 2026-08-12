@@ -14,3 +14,6 @@ __pycache__/
 .idea/
 *.swp
 *.swo
+
+# MediaPipe model assets
+hand_landmarker.task
