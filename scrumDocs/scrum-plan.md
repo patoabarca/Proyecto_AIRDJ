@@ -1,6 +1,6 @@
 # Plan de Requerimientos — AirDJ
 
-_Generado automáticamente el 2026-08-22T11:50:51.823Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-08-22T14:33:09.937Z — no editar a mano, se sobreescribe en cada publicación._
 
 Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
 
