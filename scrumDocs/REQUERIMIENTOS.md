@@ -1,6 +1,6 @@
 # Requerimientos -- AirDJ
 
-_Generado automaticamente el 2026-08-22T11:50:54.038Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-08-22T14:33:12.224Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: HU01 — Activación deliberada del sistema
 
