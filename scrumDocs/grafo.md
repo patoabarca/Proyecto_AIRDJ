@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- AirDJ
 
-_Generado automaticamente el 2026-08-29T20:40:20.483Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-08-29T23:14:42.548Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
