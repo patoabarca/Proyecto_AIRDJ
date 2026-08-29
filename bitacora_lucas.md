@@ -46,12 +46,12 @@ A continuación se detallan las etapas planificadas según el documento `Proyect
 - [x] Mostrar visualmente una barra de carga o progreso de activación.
 - **Notas de progreso:** Implementado por completo el controlador de activación en `src/activation.py` con pruebas unitarias en `tests/test_activation.py` y demo visual en `tests/demo_activation.py`.
 
-### [ ] Etapa 5 — Máquina de Estados y Ventana Temporal
+### [x] Etapa 5 — Máquina de Estados y Ventana Temporal
 *Requerimientos: RF06*
-- [ ] Implementar la máquina de estados: `BLOQUEADO`, `ACTIVANDO`, `ACTIVO`, `EJECUTANDO` y `COOLDOWN`.
-- [ ] Configurar ventana de comandos de 5 segundos al activarse (espera de gesto).
-- [ ] Implementar el bloqueo automático por timeout si no hay gestos en ese tiempo.
-- **Notas de progreso:**
+- [x] Implementar la máquina de estados: `BLOQUEADO`, `ACTIVANDO`, `ACTIVO`, `EJECUTANDO` y `COOLDOWN`.
+- [x] Configurar ventana de comandos de 5 segundos al activarse (espera de gesto).
+- [x] Implementar el bloqueo automático por timeout si no hay gestos en ese tiempo.
+- **Notas de progreso:** Implementada la máquina de estados desacoplada en `src/state_machine.py` con pruebas en `tests/test_state_machine.py` y demo visual en `tests/demo_state_machine.py`.
 
 ### [ ] Etapa 6 — Tracking y Gestos Dinámicos
 *Requerimientos: RF04, RF07*
@@ -69,12 +69,12 @@ A continuación se detallan las etapas planificadas según el documento `Proyect
 - [ ] Mostrar visualmente la barra de volumen en pantalla.
 - **Notas de progreso:**
 
-### [ ] Etapa 8 — Validación y Cooldown
+### [x] Etapa 8 — Validación y Cooldown
 *Requerimientos: RF07*
-- [ ] Bloquear la ejecución repetida de un mismo gesto mientras se mantiene activo.
-- [ ] Implementar período de `COOLDOWN` (espera temporal) posterior a una acción multimedia.
-- [ ] Asegurar el retorno suave al estado `BLOQUEADO`.
-- **Notas de progreso:**
+- [x] Bloquear la ejecución repetida de un mismo gesto mientras se mantiene activo.
+- [x] Implementar período de `COOLDOWN` (espera temporal) posterior a una acción multimedia.
+- [x] Asegurar el retorno suave al estado `BLOQUEADO`.
+- **Notas de progreso:** Integrada la lógica de cooldown en la máquina de estados principal, garantizando que tras la ejecución de comandos se bloqueen nuevas órdenes y que el volumen pase a cooldown de forma fluida.
 
 ### [ ] Etapa 9 — Integración Multimedia y Feedback
 *Requerimientos: RF08, RF09*
@@ -111,3 +111,7 @@ A continuación se detallan las etapas planificadas según el documento `Proyect
 - **Estrategia de Estabilidad:** Implementada la validación espacial calculando la distancia euclidiana respecto a una posición de referencia inicial en coordenadas normalizadas.
 - **Pruebas Automatizadas:** Creadas 10 pruebas unitarias detalladas en `tests/test_activation.py` que pasan con éxito garantizando el correcto funcionamiento del temporizador de 1.5s, estabilidad, detección de zonas, reseteo y robustez ante tipos de datos inválidos.
 - **Demo Interactiva:** Se programó `tests/demo_activation.py` para visualizar en tiempo real el proceso de activación, la barra de progreso, la zona de comandos y el estado del activador.
+- **Módulo 7 (Máquina de Estados, Timeout y Cooldown):** Se desarrolló `src/state_machine.py` conteniendo la clase `StateMachine` y el enum `SystemState`. Se desacopló por completo la validación del activador (consumiendo directamente `ActivationResult` del Módulo 4).
+- **Control de Volumen Continuo:** Implementado el submodo continuo para volumen que suspende el timeout y transiciona a `COOLDOWN` cuando finaliza el gesto.
+- **Pruebas Automatizadas del Estado:** Creadas 13 pruebas unitarias completas en `tests/test_state_machine.py` con cobertura total de transiciones, bloqueos y volumen continuo.
+- **Demo Integrada de Estados:** Creado `tests/demo_state_machine.py` con HUD interactivo para testear visualmente la activación, los timeouts de 5s, los comandos discretos, la pinza de volumen y el período de cooldown de 1.5s.
