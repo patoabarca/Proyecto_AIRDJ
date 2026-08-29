@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 from src.camera import CameraManager
 from src.hand_detector import HandDetector
+from src.static_gestures import GestureLabel, StaticGestureRecognizer
 
 def parse_args():
     """
@@ -80,6 +81,7 @@ def main():
 
     # Initialize the Hand Detector (Module 2)
     detector = HandDetector(static_image_mode=False, max_num_hands=1)
+    gesture_recognizer = StaticGestureRecognizer()
 
     # Retrieve camera hardware properties
     props = camera.get_properties()
@@ -126,6 +128,7 @@ def main():
 
             # Execute hand detection (Module 2)
             result = detector.detect(frame)
+            gesture_result = gesture_recognizer.classify(result)
 
             # Draw landmarks and connections on frame if hand is detected
             if result.detected:
@@ -144,7 +147,7 @@ def main():
             # --- RENDER OVERLAY HUD (Rich Aesthetics) ---
             # Create a semi-transparent background box for the HUD to guarantee readability
             hud_x1, hud_y1 = 15, 15
-            hud_x2, hud_y2 = 380, 215
+            hud_x2, hud_y2 = 380, 265
             
             overlay = frame.copy()
             cv2.rectangle(overlay, (hud_x1, hud_y1), (hud_x2, hud_y2), (0, 0, 0), -1)
@@ -163,6 +166,8 @@ def main():
                 f"FPS Camara: {camera_fps if camera_fps > 0 else 'N/A'}",
                 f"FPS Procesamiento: {processing_fps:.1f}",
                 f"Estado: {'MANO DETECTADA' if result.detected else 'SIN MANO'}",
+                f"Gesto: {gesture_result.label.value}",
+                f"Confianza: {gesture_result.confidence:.0%}",
                 "F = pantalla completa",
                 "Q = salir"
             ]
@@ -175,6 +180,8 @@ def main():
                 # Accentuate the Hand Detection State: Green if detected, Red if not
                 if i == 4:
                     line_color = (0, 255, 0) if result.detected else (0, 0, 255)
+                if i == 5:
+                    line_color = (0, 255, 255) if gesture_result.label != GestureLabel.NEUTRO else color
                 # Accentuate the exit prompt in yellow/orange
                 if i == len(lines) - 1:
                     line_color = (100, 100, 255)
