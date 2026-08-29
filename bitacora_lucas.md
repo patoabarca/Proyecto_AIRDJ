@@ -39,12 +39,12 @@ A continuación se detallan las etapas planificadas según el documento `Proyect
 - [ ] Probar estabilidad del reconocimiento en distintas distancias.
 - **Notas de progreso:**
 
-### [ ] Etapa 4 — Activación y Zona de Comandos
+### [x] Etapa 4 — Activación y Zona de Comandos
 *Requerimientos: RF06, RF07*
-- [ ] Definir y dibujar en pantalla la "Zona de comandos" (cuadro delimitador).
-- [ ] Validar que la palma abierta se mantenga estable dentro de esa zona durante 1.5 segundos.
-- [ ] Mostrar visualmente una barra de carga o progreso de activación.
-- **Notas de progreso:**
+- [x] Definir y dibujar en pantalla la "Zona de comandos" (cuadro delimitador).
+- [x] Validar que la palma abierta se mantenga estable dentro de esa zona durante 1.5 segundos.
+- [x] Mostrar visualmente una barra de carga o progreso de activación.
+- **Notas de progreso:** Implementado por completo el controlador de activación en `src/activation.py` con pruebas unitarias en `tests/test_activation.py` y demo visual en `tests/demo_activation.py`.
 
 ### [ ] Etapa 5 — Máquina de Estados y Ventana Temporal
 *Requerimientos: RF06*
@@ -105,3 +105,9 @@ A continuación se detallan las etapas planificadas según el documento `Proyect
 - **Integración con Cámara:** Se integró el detector con `main.py` de modo que dibuja los landmarks de la mano, conexiones esqueléticas y centro de la mano, además de reflejar en tiempo real el estado de detección ("MANO DETECTADA" / "SIN MANO") en el HUD.
 - **Pruebas Unitarias:** Se implementaron pruebas automáticas en `tests/test_hand_detector.py` evaluando la conversión matemática de píxeles, cálculo de centro y tratamiento de frames nulos. Todos los tests pasaron exitosamente.
 - **Contrato de Datos:** Se documentó detalladamente el formato de entrada y salida del Módulo 2 en el `README.md` del proyecto.
+
+### 29 de Agosto de 2026
+- **Módulo 4 (Activación y Validación Temporal):** Se desarrolló por completo la clase `ActivationController` y el dataclass `ActivationResult` en `src/activation.py`.
+- **Estrategia de Estabilidad:** Implementada la validación espacial calculando la distancia euclidiana respecto a una posición de referencia inicial en coordenadas normalizadas.
+- **Pruebas Automatizadas:** Creadas 10 pruebas unitarias detalladas en `tests/test_activation.py` que pasan con éxito garantizando el correcto funcionamiento del temporizador de 1.5s, estabilidad, detección de zonas, reseteo y robustez ante tipos de datos inválidos.
+- **Demo Interactiva:** Se programó `tests/demo_activation.py` para visualizar en tiempo real el proceso de activación, la barra de progreso, la zona de comandos y el estado del activador.
