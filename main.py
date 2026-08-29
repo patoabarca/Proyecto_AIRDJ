@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from src.camera import CameraManager
 from src.hand_detector import HandDetector
 from src.static_gestures import GestureLabel, StaticGestureRecognizer
+from src.dynamic_gestures import SwipeDetector
 
 def parse_args():
     """
@@ -83,6 +84,9 @@ def main():
     detector = HandDetector(static_image_mode=False, max_num_hands=1)
     gesture_recognizer = StaticGestureRecognizer()
 
+    # Initialize the Swipe Detector (Module 5)
+    swipe_detector = SwipeDetector()
+
     # Retrieve camera hardware properties
     props = camera.get_properties()
     width = props["width"]
@@ -113,6 +117,10 @@ def main():
     fps_start_time = time.time()
     processing_fps = 0.0
 
+    # Variables for swipe gesture tracking (Module 5)
+    last_swipe = "NINGUNO"
+    last_swipe_time = 0.0
+
     try:
         while True:
             # Mark start of current frame processing cycle
@@ -134,6 +142,13 @@ def main():
             if result.detected:
                 detector.draw_landmarks(frame, result, draw_center=True)
 
+            # Update Swipe Detector (Module 5)
+            swipe_gesture = swipe_detector.update(result)
+            if swipe_gesture is not None:
+                last_swipe = swipe_gesture
+                last_swipe_time = time.time()
+                print(f"[EVENTO] Gesto detectado: {swipe_gesture}")
+
             # Increment frame counter for processing FPS calculation
             frame_count += 1
 
@@ -147,7 +162,7 @@ def main():
             # --- RENDER OVERLAY HUD (Rich Aesthetics) ---
             # Create a semi-transparent background box for the HUD to guarantee readability
             hud_x1, hud_y1 = 15, 15
-            hud_x2, hud_y2 = 380, 265
+            hud_x2, hud_y2 = 380, 290
             
             overlay = frame.copy()
             cv2.rectangle(overlay, (hud_x1, hud_y1), (hud_x2, hud_y2), (0, 0, 0), -1)
@@ -160,14 +175,16 @@ def main():
             thickness = 1
             color = (255, 255, 255) # White text
 
+            show_swipe = last_swipe if (time.time() - last_swipe_time < 1.5) else "NINGUNO"
             lines = [
-                "AirDJ - Modulos 1 y 2",
+                "AirDJ - Modulos 1 a 6",
                 f"Resolucion: {width} x {height}",
                 f"FPS Camara: {camera_fps if camera_fps > 0 else 'N/A'}",
                 f"FPS Procesamiento: {processing_fps:.1f}",
                 f"Estado: {'MANO DETECTADA' if result.detected else 'SIN MANO'}",
-                f"Gesto: {gesture_result.label.value}",
+                f"Gesto Estatico: {gesture_result.label.value}",
                 f"Confianza: {gesture_result.confidence:.0%}",
+                f"Gesto Dinamico: {show_swipe}",
                 "F = pantalla completa",
                 "Q = salir"
             ]
@@ -180,8 +197,12 @@ def main():
                 # Accentuate the Hand Detection State: Green if detected, Red if not
                 if i == 4:
                     line_color = (0, 255, 0) if result.detected else (0, 0, 255)
-                if i == 5:
+                # Accentuate the active static gesture
+                elif i == 5:
                     line_color = (0, 255, 255) if gesture_result.label != GestureLabel.NEUTRO else color
+                # Accentuate the active dynamic gesture (Cyan if active, grey otherwise)
+                elif i == 7:
+                    line_color = (0, 255, 255) if show_swipe != "NINGUNO" else (200, 200, 200)
                 # Accentuate the exit prompt in yellow/orange
                 if i == len(lines) - 1:
                     line_color = (100, 100, 255)
@@ -194,6 +215,41 @@ def main():
                     font_scale, 
                     line_color, 
                     thickness, 
+                    cv2.LINE_AA
+                )
+
+            # --- GESTURE OVERLAY (Premium Aesthetic Feedback) ---
+            time_since_swipe = time.time() - last_swipe_time
+            if time_since_swipe < 1.2:
+                # Semi-transparent overlay for swipe detection banner
+                banner_h, banner_w = 80, 420
+                cy, cx = height // 2, width // 2
+                bx1, by1 = cx - banner_w // 2, cy - banner_h // 2
+                bx2, by2 = cx + banner_w // 2, cy + banner_h // 2
+                
+                # Make sure coords are within frame bounds
+                bx1, by1 = max(0, bx1), max(0, by1)
+                bx2, by2 = min(width, bx2), min(height, by2)
+                
+                banner_overlay = frame.copy()
+                #tailored colors (vibrant orange for left, cyan for right)
+                banner_color = (255, 191, 0) if last_swipe == "SWIPE_DERECHA" else (0, 128, 255)
+                
+                cv2.rectangle(banner_overlay, (bx1, by1), (bx2, by2), banner_color, -1)
+                # Apply fading alpha
+                alpha = 0.45 * (1.0 - time_since_swipe / 1.2)
+                cv2.addWeighted(banner_overlay, alpha, frame, 1.0 - alpha, 0, frame)
+                
+                text_val = f"<<< {last_swipe} <<<" if last_swipe == "SWIPE_IZQUIERDA" else f">>> {last_swipe} >>>"
+                (tw, th), _ = cv2.getTextSize(text_val, cv2.FONT_HERSHEY_DUPLEX, 0.8, 2)
+                cv2.putText(
+                    frame,
+                    text_val,
+                    (cx - tw // 2, cy + th // 2),
+                    cv2.FONT_HERSHEY_DUPLEX,
+                    0.8,
+                    (255, 255, 255),
+                    2,
                     cv2.LINE_AA
                 )
 
