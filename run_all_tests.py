@@ -31,7 +31,7 @@ if __name__ == "__main__":
     print(f"Tests ejecutados: {result.testsRun}")
     print(f"Errores: {len(result.errors)}")
     print(f"Fallos: {len(result.failures)}")
-    print(f"Estado: {'ÉXITO ✓' if result.wasSuccessful() else 'FALLO ✗'}")
+    print(f"Estado: {'EXITO [OK]' if result.wasSuccessful() else 'FALLO [ERROR]'}")
     print("=" * 60)
     
     sys.exit(0 if result.wasSuccessful() else 1)
