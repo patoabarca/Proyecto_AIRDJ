@@ -11,13 +11,11 @@ from src.camera import CameraManager
 from src.hand_detector import HandDetector
 from src.activation import ActivationController, ActivationResult
 
-def is_palm(landmarks) -> bool:
+def is_palm_demo_only(landmarks) -> bool:
     """
-    Heurística simple para detectar si la mano corresponde a una palma abierta.
-    Verifica que los dedos índice, medio, anular y meñique estén extendidos
-    (la punta del dedo debe estar más alta que la articulación intermedia).
-    En el sistema de coordenadas de OpenCV, el eje Y apunta hacia abajo,
-    por lo que menor Y significa que está más alto físicamente.
+    Heurística de demostración aislada para detectar si la mano corresponde a una palma abierta.
+    Esta función es exclusiva para pruebas visuales en este archivo demo.
+    Verifica que los dedos índice, medio, anular y meñique estén extendidos.
     """
     try:
         # Puntos de MediaPipe:
@@ -30,8 +28,6 @@ def is_palm(landmarks) -> bool:
         ring_open = landmarks[16].y < landmarks[14].y
         pinky_open = landmarks[20].y < landmarks[18].y
 
-        # El pulgar puede ser más ambiguo por orientación, 
-        # pero si los 4 dedos largos están extendidos, es muy probable que sea una palma.
         return index_open and middle_open and ring_open and pinky_open
     except Exception:
         return False
@@ -53,17 +49,17 @@ def main():
         print(f"[ERROR] No se pudo abrir la camara.", file=sys.stderr)
         sys.exit(1)
 
-    # Inicializar detector e interface del módulo 4
+    # Inicializar detector e interface del módulo 4 con umbral de 0.04
     detector = HandDetector(static_image_mode=False, max_num_hands=1)
     
-    # Parámetros del controlador
     activation_hold_time = 1.5
-    stability_threshold = 0.08  # Umbral de estabilidad (8% del ancho/alto normalizado)
+    stability_threshold = 0.04  # Umbral más conservador
     
     activation = ActivationController(
         activation_hold_time=activation_hold_time,
         stability_threshold=stability_threshold,
-        require_zone=True
+        require_zone=True,
+        window_size=10
     )
 
     props = camera.get_properties()
@@ -71,15 +67,14 @@ def main():
     h = props["height"]
 
     # Definir la zona de comandos (caja central en coordenadas normalizadas)
-    # Rango X: 0.3 a 0.7, Rango Y: 0.25 a 0.75
     zone_x_min, zone_x_max = 0.3, 0.7
     zone_y_min, zone_y_max = 0.25, 0.75
 
-    window_name = "AirDJ - Demo Modulo 4: Activacion y Estabilidad"
+    window_name = "AirDJ - Demo Modulo 4: Activacion y Estabilidad (Monotonica)"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(window_name, 1024, 768)
 
-    # Mensaje temporal de activación confirmada
+    # Mensaje temporal de activación confirmada (usando tiempo monotónico)
     confirmation_display_until = 0.0
 
     print("\n=======================================================")
@@ -106,8 +101,8 @@ def main():
                 detector.draw_landmarks(frame, result, draw_center=True)
                 hand_center = result.center_normalized
                 
-                # Clasificar gesto
-                if is_palm(result.landmarks):
+                # Clasificar gesto con la función de demo aislada
+                if is_palm_demo_only(result.landmarks):
                     gesture = "PALMA"
 
                 # Comprobar si está en la zona de comandos
@@ -116,8 +111,8 @@ def main():
                     if zone_x_min <= hx <= zone_x_max and zone_y_min <= hy <= zone_y_max:
                         inside_zone = True
 
-            # Actualizar módulo de activación
-            current_time = time.time()
+            # Actualizar módulo de activación usando tiempo monotónico
+            current_time = time.monotonic()
             act_res = activation.update(
                 gesture=gesture,
                 hand_center=hand_center,
@@ -131,7 +126,6 @@ def main():
                 print("[EVENTO] ¡ACTIVACION_CONFIRMADA! El sistema esta desbloqueado.")
 
             # --- DIBUJAR LA ZONA DE COMANDOS ---
-            # Color verde si está adentro, rojo/amarillo si está afuera o no hay mano
             box_color = (0, 255, 0) if (inside_zone and result.detected) else (0, 165, 255)
             thickness = 2 if inside_zone else 1
             
@@ -139,7 +133,6 @@ def main():
             p_max = (int(zone_x_max * w), int(zone_y_max * h))
             cv2.rectangle(frame, p_min, p_max, box_color, thickness)
             
-            # Etiqueta de la zona
             font = cv2.FONT_HERSHEY_SIMPLEX
             cv2.putText(
                 frame, 
@@ -152,24 +145,26 @@ def main():
                 cv2.LINE_AA
             )
 
-            # --- RENDER OVERLAY HUD (Aesthetics) ---
-            # Caja de fondo semitransparente para información
+            # --- RENDER OVERLAY HUD ---
             hud_x1, hud_y1 = 15, 15
             hud_x2, hud_y2 = 420, 230
             overlay = frame.copy()
             cv2.rectangle(overlay, (hud_x1, hud_y1), (hud_x2, hud_y2), (0, 0, 0), -1)
             cv2.addWeighted(overlay, 0.70, frame, 0.30, 0, frame)
 
-            # Estado actual para mostrar en HUD
+            # Determinar estado para mostrar en el HUD a partir del campo status de la salida
+            status_color = (100, 100, 100)  # Gris por defecto
             status_text = "BLOQUEADO"
-            status_color = (100, 100, 100)  # Gris
 
-            if act_res.activation_confirmed or current_time < confirmation_display_until:
+            if act_res.status == "CONFIRMED" or current_time < confirmation_display_until:
                 status_text = "ACTIVACION CONFIRMADA"
-                status_color = (0, 255, 0)  # Verde brillante
-            elif act_res.is_activating:
+                status_color = (0, 255, 0)
+            elif act_res.status == "ACTIVATING":
                 status_text = f"ACTIVANDO... {int(act_res.progress * 100)}%"
-                status_color = (0, 165, 255)  # Naranja
+                status_color = (0, 165, 255)
+            elif act_res.status == "CANCELLED":
+                status_text = "ACTIVACION CANCELADA"
+                status_color = (0, 0, 255)  # Rojo
             elif activation.activation_emitted:
                 status_text = "SISTEMA DESBLOQUEADO"
                 status_color = (0, 255, 0)
@@ -188,13 +183,10 @@ def main():
             line_spacing = 25
             for i, line in enumerate(lines):
                 line_color = (255, 255, 255)
-                # Título
                 if i == 0:
                     line_color = (255, 255, 100)
-                # Estado
                 elif i == 3:
                     line_color = status_color
-                # Gesto
                 elif i == 1:
                     line_color = (0, 255, 255) if gesture == "PALMA" else (255, 255, 255)
 
@@ -209,14 +201,12 @@ def main():
                     cv2.LINE_AA
                 )
 
-            # --- DIBUJAR BARRA DE PROGRESO EN HUD ---
+            # --- DIBUJAR BARRA DE PROGRESO ---
             bar_x = hud_x1 + 15
             bar_y = start_y + (4 * line_spacing) + 12
             bar_w = 370
             bar_h = 12
-            # Borde del contenedor
             cv2.rectangle(frame, (bar_x, bar_y), (bar_x + bar_w, bar_y + bar_h), (100, 100, 100), 1)
-            # Relleno del progreso
             fill_w = int(act_res.progress * bar_w)
             if fill_w > 0:
                 cv2.rectangle(
@@ -227,7 +217,7 @@ def main():
                     -1
                 )
 
-            # --- CARTEL DE CONFIRMACIÓN GIGANTE EN EL CENTRO ---
+            # --- CARTEL DE CONFIRMACIÓN EN EL CENTRO ---
             if current_time < confirmation_display_until:
                 cv2.putText(
                     frame,
@@ -253,7 +243,7 @@ def main():
             # Mostrar frame
             cv2.imshow(window_name, frame)
 
-            # Teclas
+            # Detectar teclas
             key = cv2.waitKey(1) & 0xFF
             if key == ord('q') or key == ord('Q'):
                 print("Cerrando demo...")
@@ -264,7 +254,6 @@ def main():
                 print("[INFO] Módulo de activación reiniciado manualmente (reset).")
 
             # Reset automático si se quita la mano tras haber sido activado
-            # (opcional, ayuda al testeo fluido)
             if activation.activation_emitted and not result.detected:
                 activation.reset()
                 print("[INFO] Mano retirada. Módulo reiniciado automáticamente.")

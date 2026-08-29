@@ -2,7 +2,7 @@ import math
 import time
 import logging
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -11,12 +11,13 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 class ActivationResult:
     """
     Contrato de datos de salida para el Módulo 4.
-    Indica explícitamente el estado de la activación, el progreso actual
-    y si se confirmó la activación en el frame actual.
+    Indica explícitamente el estado de la activación, el progreso actual,
+    si se confirmó en el frame actual y el estado cualitativo (status).
     """
     is_activating: bool
     progress: float  # Rango de 0.0 a 1.0 (representando de 0% a 100%)
     activation_confirmed: bool
+    status: str  # "IDLE", "ACTIVATING", "CONFIRMED", o "CANCELLED"
 
 class ActivationController:
     """
@@ -27,55 +28,81 @@ class ActivationController:
     def __init__(
         self,
         activation_hold_time: float = 1.5,
-        stability_threshold: float = 0.08,
-        require_zone: bool = True
+        stability_threshold: float = 0.04,
+        require_zone: bool = True,
+        window_size: int = 10
     ):
         """
         Inicializa el controlador con los umbrales correspondientes.
 
         Args:
             activation_hold_time (float): Tiempo en segundos que debe mantenerse la palma (ej: 1.5s).
-            stability_threshold (float): Umbral de desplazamiento máximo permitido en coordenadas normalizadas.
+            stability_threshold (float): Umbral de desplazamiento máximo permitido en la ventana en coordenadas normalizadas.
             require_zone (bool): Si es True, requiere que inside_zone sea True para avanzar.
+            window_size (int): Tamaño de la ventana corta de posiciones para evaluar la estabilidad.
         """
         self.activation_hold_time = activation_hold_time
         self.stability_threshold = stability_threshold
         self.require_zone = require_zone
+        self.window_size = window_size
         
         # Inicializa variables de estado interno
         self.reset()
 
     def reset(self):
         """
-        Reinicia el estado del controlador a su valor inicial predeterminado.
-        Limpia temporizadores, posición de referencia, banderas de progreso y emisión.
+        Reinicia completamente todo el estado interno relacionado con la activación.
+        Limpia temporizadores, progreso, historial de posiciones y la bandera de emisión.
         """
         self.start_time: Optional[float] = None
-        self.reference_center: Optional[Tuple[float, float]] = None
         self.is_activating: bool = False
         self.progress: float = 0.0
         self.activation_emitted: bool = False
+        self.position_history: List[Tuple[float, float]] = []
+
+    def _reset_tracking(self):
+        """
+        Reinicia el seguimiento del gesto actual sin alterar la bandera de confirmación emitida.
+        Utilizado para cancelaciones del proceso actual de activación.
+        """
+        self.start_time = None
+        self.is_activating = False
+        self.progress = 0.0
+        self.position_history = []
 
     def _is_stable(self, current_center: Tuple[float, float]) -> bool:
         """
-        Calcula la distancia euclidiana entre el centro de la mano actual y la de referencia.
-        Determina si el desplazamiento es menor o igual al umbral de estabilidad configurado.
+        Determina la estabilidad utilizando un enfoque de ventana deslizante corta.
+        Mide el diámetro máximo (distancia máxima entre cualquier par de puntos en la ventana).
+        Esto permite un desplazamiento lento/suave pero detecta un movimiento rápido o brusco.
 
         Args:
-            current_center (Tuple[float, float]): Coordenadas normalizadas (x, y) del centro de la mano actual.
+            current_center (Tuple[float, float]): Coordenadas normalizadas (x, y) de la mano actual.
 
         Returns:
-            bool: True si la mano se mantiene dentro del umbral de estabilidad, False en caso contrario.
+            bool: True si la mano se mantiene estable (dentro del umbral de estabilidad), False de lo contrario.
         """
-        if self.reference_center is None:
+        # Añadir al historial
+        self.position_history.append(current_center)
+        if len(self.position_history) > self.window_size:
+            self.position_history.pop(0)
+
+        # Si hay menos de 2 elementos, se considera estable
+        if len(self.position_history) < 2:
             return True
-        
-        ref_x, ref_y = self.reference_center
-        cur_x, cur_y = current_center
-        
-        # Distancia Euclidiana
-        distance = math.sqrt((cur_x - ref_x) ** 2 + (cur_y - ref_y) ** 2)
-        return distance <= self.stability_threshold
+
+        # Encontrar la máxima distancia entre cualquier par de puntos de la ventana (diámetro del conjunto)
+        max_distance = 0.0
+        n = len(self.position_history)
+        for i in range(n):
+            for j in range(i + 1, n):
+                p1 = self.position_history[i]
+                p2 = self.position_history[j]
+                distance = math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
+                if distance > max_distance:
+                    max_distance = distance
+
+        return max_distance <= self.stability_threshold
 
     def _validate_inputs(self, gesture: Optional[str], hand_center: Optional[Tuple[float, float]], timestamp: Optional[float]) -> bool:
         """
@@ -127,7 +154,7 @@ class ActivationController:
         Args:
             gesture (Optional[str]): Gesto actual detectado (ej: "PALMA").
             hand_center (Optional[Tuple[float, float]]): Posición (x, y) normalizada del centro de la mano.
-            timestamp (float): Tiempo actual en segundos (ej: time.time()).
+            timestamp (float): Tiempo actual en segundos (ej: time.monotonic()).
             inside_zone (bool): Indica si la mano se encuentra dentro de la zona delimitada.
 
         Returns:
@@ -135,66 +162,65 @@ class ActivationController:
         """
         # 1. Validación robusta de tipos de entrada para evitar excepciones por Nones o tipos inválidos
         if not self._validate_inputs(gesture, hand_center, timestamp):
-            self.start_time = None
-            self.reference_center = None
-            self.is_activating = False
-            self.progress = 0.0
-            return ActivationResult(is_activating=False, progress=0.0, activation_confirmed=False)
+            was_activating = self.is_activating
+            self._reset_tracking()
+            return ActivationResult(
+                is_activating=False,
+                progress=0.0,
+                activation_confirmed=False,
+                status="CANCELLED" if was_activating else "IDLE"
+            )
 
         # Tratar timestamp None o inválido de forma segura usando tiempo de sistema
         if timestamp is None:
-            timestamp = time.time()
+            timestamp = time.monotonic()
 
         # Coerción y validación de la zona de interacción
         inside_valid_zone = bool(inside_zone) if isinstance(inside_zone, (bool, int)) else True
         effective_zone = inside_valid_zone or not self.require_zone
 
-        # 2. Condiciones de reinicio / cancelación inmediata
-        if gesture != "PALMA" or hand_center is None or not effective_zone:
-            # Si el gesto ya fue confirmado, preservamos la bandera de emisión pero reseteamos el tracking
-            self.start_time = None
-            self.reference_center = None
-            self.is_activating = False
-            self.progress = 0.0
-            return ActivationResult(
-                is_activating=False,
-                progress=0.0,
-                activation_confirmed=False
-            )
-
-        # 3. Si ya se confirmó la activación previamente, no volvemos a procesar ni a emitir el evento.
+        # 2. Si ya se confirmó la activación previamente, no volvemos a procesar ni a emitir el evento.
         # Esperamos a que la máquina de estados ejecute un reset() explícito.
         if self.activation_emitted:
             return ActivationResult(
                 is_activating=False,
                 progress=1.0,
-                activation_confirmed=False
+                activation_confirmed=False,
+                status="CONFIRMED"
             )
 
-        # 4. Validar estabilidad si ya se inició el proceso
-        if self.start_time is not None:
-            if not self._is_stable(hand_center):
-                # Desplazamiento excede el umbral: cancelar y reiniciar el proceso
-                self.start_time = None
-                self.reference_center = None
-                self.is_activating = False
-                self.progress = 0.0
-                return ActivationResult(
-                    is_activating=False,
-                    progress=0.0,
-                    activation_confirmed=False
-                )
+        # 3. Condiciones de reinicio / cancelación inmediata
+        if gesture != "PALMA" or hand_center is None or not effective_zone:
+            was_activating = self.is_activating
+            self._reset_tracking()
+            return ActivationResult(
+                is_activating=False,
+                progress=0.0,
+                activation_confirmed=False,
+                status="CANCELLED" if was_activating else "IDLE"
+            )
+
+        # 4. Validar estabilidad
+        if not self._is_stable(hand_center):
+            # Desplazamiento excede el umbral de la ventana: cancelar y reiniciar el proceso
+            self._reset_tracking()
+            return ActivationResult(
+                is_activating=False,
+                progress=0.0,
+                activation_confirmed=False,
+                status="CANCELLED"
+            )
 
         # 5. Inicialización del proceso al detectar PALMA por primera vez
         if self.start_time is None:
             self.start_time = timestamp
-            self.reference_center = hand_center
             self.is_activating = True
             self.progress = 0.0
             return ActivationResult(
                 is_activating=True,
                 progress=0.0,
-                activation_confirmed=False
+                activation_confirmed=False,
+                status="ACTIVATING"
             )
 
         # 6. Progreso temporal
@@ -206,20 +232,20 @@ class ActivationController:
 
         # 7. Comprobación del hold time
         if elapsed_time >= self.activation_hold_time:
-            # Confirmación de la activación por primera vez
-            confirmed = not self.activation_emitted
-            if confirmed:
-                self.activation_emitted = True
-                self.is_activating = False  # Transiciona a confirmado
+            # Confirmación de la activación
+            self.activation_emitted = True
+            self.is_activating = False  # Transiciona de "ACTIVANDO" a "CONFIRMADO"
             
             return ActivationResult(
                 is_activating=False,
                 progress=1.0,
-                activation_confirmed=confirmed
+                activation_confirmed=True,
+                status="CONFIRMED"
             )
 
         return ActivationResult(
             is_activating=True,
             progress=self.progress,
-            activation_confirmed=False
+            activation_confirmed=False,
+            status="ACTIVATING"
         )
