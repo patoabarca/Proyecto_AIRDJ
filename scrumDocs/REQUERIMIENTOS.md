@@ -1,6 +1,6 @@
 # Requerimientos -- AirDJ
 
-_Generado automaticamente el 2026-08-29T23:14:41.509Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:01:07.632Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: HU01 — Activación deliberada del sistema
 
@@ -300,22 +300,26 @@ El usuario deberá poder utilizar el sistema sin conocimientos técnicos especí
 
 Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contacto físico con el dispositivo.
 
-## Requerimientos operacionales
+## RO-01: RF01 — Adquisición y procesamiento de video
 
-_Trabajo que hay que agendar y seguir pero que no nace de una Historia de Usuario: reuniones, validaciones, capacitaciones._
-
-### RO-01: RF01 — Adquisición y procesamiento de video (Operacional)
+### RF-01: RF01 — Adquisición y procesamiento de video (Funcional)
 
 El sistema deberá recibir video desde una cámara, procesar sus frames y mantener un flujo continuo de imágenes para el análisis en tiempo real.
 
-### RO-02: RF02 — Detección y representación de la mano (Operacional)
+## RO-02: RF02 — Detección y representación de la mano
+
+### RF-01: RF02 — Detección y representación de la mano (Funcional)
 
 El sistema deberá detectar la presencia de una mano, extraer sus landmarks y obtener coordenadas normalizadas o relativas que permitan analizar su postura y movimiento.
 
-### RO-03: RNF07 — Modularidad (Operacional)
+## RO-03: RNF07 — Modularidad
+
+### RF-01: RNF07 — Modularidad (Funcional)
 
 El sistema deberá desarrollarse mediante módulos independientes para facilitar pruebas, mantenimiento y futuras mejoras.
 
-### RO-04: RNF09 — Privacidad (Operacional)
+## RO-04: RNF09 — Privacidad
+
+### RF-01: RNF09 — Privacidad (Funcional)
 
 El sistema deberá priorizar el procesamiento local del video y no requerirá almacenamiento permanente de las imágenes capturadas.
