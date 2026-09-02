@@ -1,6 +1,6 @@
 # Requerimientos -- AirDJ
 
-_Generado automaticamente el 2026-09-02T14:48:28.816Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:48:44.820Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: HU01 — Activación deliberada del sistema
 
@@ -321,5 +321,15 @@ El sistema deberá priorizar el procesamiento local del video y no requerirá al
 ## RO-05: Capacitacion del cliente
 
 ### RF-01: Capacitacion del cliente (Funcional)
+
+_Sin detalle cargado._
+
+## RO-06: NO DEBE PISAR A LOS HIJOS
+
+### RF-01: Auditoria (Funcional)
+
+_Sin detalle cargado._
+
+### RF-02: Redactar el informe (Funcional)
 
 _Sin detalle cargado._
