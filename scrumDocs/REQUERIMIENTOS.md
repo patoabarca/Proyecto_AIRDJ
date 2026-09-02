@@ -1,6 +1,6 @@
 # Requerimientos -- AirDJ
 
-_Generado automaticamente el 2026-09-02T14:27:33.076Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:47:46.281Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: HU01 — Activación deliberada del sistema
 
@@ -317,3 +317,9 @@ El sistema deberá desarrollarse mediante módulos independientes para facilitar
 ### RF-01: RNF09 — Privacidad (Funcional)
 
 El sistema deberá priorizar el procesamiento local del video y no requerirá almacenamiento permanente de las imágenes capturadas.
+
+## RO-05: Capacitacion del cliente
+
+### RF-01: Capacitacion del cliente (Funcional)
+
+_Sin detalle cargado._
