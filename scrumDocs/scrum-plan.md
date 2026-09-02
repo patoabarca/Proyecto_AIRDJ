@@ -1,6 +1,6 @@
 # Plan de Requerimientos — AirDJ
 
-_Generado automáticamente el 2026-08-29T23:14:39.147Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-02T14:01:04.523Z — no editar a mano, se sobreescribe en cada publicación._
 
 Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
 
@@ -48,10 +48,10 @@ Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada f
 | 40 | RF-02 | RF07 — Validación y prevención de activaciones accidentales | HU-06 | — | — | Hacer | patricia | — | — |
 | 41 | RF-03 | RF04 — Reconocimiento de gestos dinámicos | HU-06 | — | — | Hacer | patricia | — | — |
 | 42 | RNF-01 | RNF02 — Interacción sin contacto | HU-06 | — | — | Hacer | victoria | — | — |
-| 43 | RO-01 | RF01 — Adquisición y procesamiento de video | — | — | — | Hacer | patricia | — | — |
-| 44 | RO-02 | RF02 — Detección y representación de la mano | — | — | — | Hacer | lucas | — | — |
-| 45 | RO-03 | RNF07 — Modularidad | — | — | — | Hacer | patricia | — | — |
-| 46 | RO-04 | RNF09 — Privacidad | — | — | — | Hacer | patricia | — | — |
+| 43 | RF-01 | RF01 — Adquisición y procesamiento de video | RO-01 | — | — | Hacer | patricia | — | — |
+| 44 | RF-01 | RF02 — Detección y representación de la mano | RO-02 | — | — | Hacer | lucas | — | — |
+| 45 | RF-01 | RNF07 — Modularidad | RO-03 | — | — | Hacer | patricia | — | — |
+| 46 | RF-01 | RNF09 — Privacidad | RO-04 | — | — | Hacer | patricia | — | — |
 
 ## Detalle
 
@@ -181,14 +181,14 @@ Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada f
 ### RNF-01 — RNF02 — Interacción sin contacto
 - Estimado: 4h
 
-### RO-01 — RF01 — Adquisición y procesamiento de video
+### RF-01 — RF01 — Adquisición y procesamiento de video
 - Estimado: 4h
 
-### RO-02 — RF02 — Detección y representación de la mano
+### RF-01 — RF02 — Detección y representación de la mano
 - Estimado: 4h
 
-### RO-03 — RNF07 — Modularidad
+### RF-01 — RNF07 — Modularidad
 - Estimado: 4h
 
-### RO-04 — RNF09 — Privacidad
+### RF-01 — RNF09 — Privacidad
 - Estimado: 4h
