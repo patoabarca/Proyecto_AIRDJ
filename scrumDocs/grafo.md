@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- AirDJ
 
-_Generado automaticamente el 2026-09-02T14:27:34.667Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:47:47.717Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -80,5 +80,8 @@ graph TD
   end
   subgraph US_OP_REQ_1787395740762["RO-04: RNF09 — Privacidad"]
     REQ_1787395740762["RF-01: RNF09 — Privacidad"]
+  end
+  subgraph US_1788360463894["RO-05: Capacitacion del cliente"]
+    REQ_1788360463899["RF-01: Capacitacion del cliente"]
   end
 ```
