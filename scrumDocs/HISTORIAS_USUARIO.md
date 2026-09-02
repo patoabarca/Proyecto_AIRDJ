@@ -1,6 +1,6 @@
 # Historias de Usuario -- AirDJ
 
-_Generado automaticamente el 2026-09-02T14:01:06.510Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:01:29.090Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: HU01 — Activación deliberada del sistema
 
