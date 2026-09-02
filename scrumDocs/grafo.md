@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- AirDJ
 
-_Generado automaticamente el 2026-09-02T14:48:30.064Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:48:46.066Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -83,5 +83,9 @@ graph TD
   end
   subgraph US_1788360463894["RO-05: Capacitacion del cliente"]
     REQ_1788360463899["RF-01: Capacitacion del cliente"]
+  end
+  subgraph US_1788360521857["RO-06: NO DEBE PISAR A LOS HIJOS"]
+    REQ_1788360521865["RF-01: Auditoria"]
+    REQ_1788360521944["RF-02: Redactar el informe"]
   end
 ```
