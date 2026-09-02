@@ -1,6 +1,6 @@
 # Plan de Requerimientos — AirDJ
 
-_Generado automáticamente el 2026-09-02T14:27:30.582Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-02T14:47:43.922Z — no editar a mano, se sobreescribe en cada publicación._
 
 Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
 
@@ -51,6 +51,7 @@ Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada f
 | 43 | RF-01 | RF01 — Adquisición y procesamiento de video | RO-01 | — | — | Hacer | patricia | — | — |
 | 44 | RF-01 | RNF07 — Modularidad | RO-03 | — | — | Hacer | patricia | — | — |
 | 45 | RF-01 | RNF09 — Privacidad | RO-04 | — | — | Hacer | patricia | — | — |
+| 46 | RF-01 | Capacitacion del cliente | RO-05 | — | — | Hacer | lucas | — | — |
 
 ## Detalle
 
@@ -188,3 +189,6 @@ Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada f
 
 ### RF-01 — RNF09 — Privacidad
 - Estimado: 4h
+
+### RF-01 — Capacitacion del cliente
+- Estimado: 6h
