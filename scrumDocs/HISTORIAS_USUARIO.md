@@ -1,6 +1,6 @@
 # Historias de Usuario -- AirDJ
 
-_Generado automaticamente el 2026-08-29T23:14:40.415Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:01:06.510Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: HU01 — Activación deliberada del sistema
 
@@ -147,3 +147,9 @@ Como usuario, quiero poder controlar las principales funciones del reproductor a
 - Durante el uso normal no debe ser necesario utilizar teclado, mouse ni pantalla táctil.
 - El usuario debe poder controlar reproducción, cambio de canción y volumen a distancia.
 - La interacción gestual debe poder realizarse dentro del campo visible de la cámara.
+
+## HU-14: Como DJ quiero armar una lista
+
+### Criterios de Aceptacion
+
+_Sin criterios de aceptacion cargados._
