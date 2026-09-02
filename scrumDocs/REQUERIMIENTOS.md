@@ -1,6 +1,6 @@
 # Requerimientos -- AirDJ
 
-_Generado automaticamente el 2026-09-02T14:27:18.842Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:27:33.076Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: HU01 — Activación deliberada del sistema
 
@@ -305,12 +305,6 @@ Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contact
 ### RF-01: RF01 — Adquisición y procesamiento de video (Funcional)
 
 El sistema deberá recibir video desde una cámara, procesar sus frames y mantener un flujo continuo de imágenes para el análisis en tiempo real.
-
-## RO-02: RF02 — Detección y representación de la mano
-
-### RF-01: RF02 — Detección y representación de la mano (Funcional)
-
-El sistema deberá detectar la presencia de una mano, extraer sus landmarks y obtener coordenadas normalizadas o relativas que permitan analizar su postura y movimiento.
 
 ## RO-03: RNF07 — Modularidad
 
