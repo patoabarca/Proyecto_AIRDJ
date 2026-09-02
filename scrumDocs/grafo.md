@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- AirDJ
 
-_Generado automaticamente el 2026-09-02T14:01:33.871Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-02T14:27:20.136Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -72,7 +72,7 @@ graph TD
     REQ_1787351243484["RNF-01: RNF01 — Facilidad de uso"]
     REQ_1787351290886["RNF-02: RNF02 — Interacción sin contacto"]
   end
-  subgraph US_OP_REQ_1787395455330["RO-01: RF01 — Adquisición y procesamiento de video"]
+  subgraph US_OP_REQ_1787395455330["RO-01: NOMBRE NUEVO DEL OPERACIONAL"]
     REQ_1787395455330["RF-01: RF01 — Adquisición y procesamiento de video"]
   end
   subgraph US_OP_REQ_1787395561173["RO-02: RF02 — Detección y representación de la mano"]
@@ -83,9 +83,5 @@ graph TD
   end
   subgraph US_OP_REQ_1787395740762["RO-04: RNF09 — Privacidad"]
     REQ_1787395740762["RF-01: RNF09 — Privacidad"]
-  end
-  subgraph US_1788357664489["RO-05: sigue operacional"]
-    REQ_1788357689182["RF-01: Armar el material"]
-    REQ_1788357689348["RNF-01: Dar la capacitación"]
   end
 ```
