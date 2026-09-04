@@ -1,6 +1,6 @@
 # Plan de Requerimientos — AirDJ
 
-_Generado automáticamente el 2026-09-02T14:48:41.891Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-04T13:55:44.421Z — no editar a mano, se sobreescribe en cada publicación._
 
 Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
 
@@ -49,10 +49,9 @@ Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada f
 | 41 | RF-03 | RF04 — Reconocimiento de gestos dinámicos | HU-06 | — | — | Hacer | patricia | — | — |
 | 42 | RNF-01 | RNF02 — Interacción sin contacto | HU-06 | — | — | Hacer | victoria | — | — |
 | 43 | RF-01 | RF01 — Adquisición y procesamiento de video | RO-01 | — | — | Hacer | patricia | — | — |
-| 44 | RF-01 | RNF07 — Modularidad | RO-03 | — | — | Hacer | patricia | — | — |
-| 45 | RF-01 | RNF09 — Privacidad | RO-04 | — | — | Hacer | patricia | — | — |
-| 46 | RF-01 | Capacitacion del cliente | RO-05 | — | — | Hacer | lucas | — | — |
-| 47 | RF-01 | Auditoria | RO-06 | — | — | Hacer | lucas | — | — |
+| 44 | RF-01 | RF02 — Detección y representación de la mano | RO-02 | — | — | Hacer | lucas | — | — |
+| 45 | RF-01 | RNF07 — Modularidad | RO-03 | — | — | Hacer | patricia | — | — |
+| 46 | RF-01 | RNF09 — Privacidad | RO-04 | — | — | Hacer | patricia | — | — |
 
 ## Detalle
 
@@ -185,14 +184,11 @@ Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada f
 ### RF-01 — RF01 — Adquisición y procesamiento de video
 - Estimado: 4h
 
+### RF-01 — RF02 — Detección y representación de la mano
+- Estimado: 4h
+
 ### RF-01 — RNF07 — Modularidad
 - Estimado: 4h
 
 ### RF-01 — RNF09 — Privacidad
 - Estimado: 4h
-
-### RF-01 — Capacitacion del cliente
-- Estimado: 6h
-
-### RF-01 — Auditoria
-- Estimado: 2h
