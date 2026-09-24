@@ -1,6 +1,6 @@
 # Developer — qué podés hacer en este proyecto
 
-_Generado automáticamente el 2026-09-24T19:39:28.030Z -- no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:57:11.882Z -- no editar a mano, se sobreescribe en cada publicación._
 
 Este es el documento de **tu** rol. Lo leés vos (la IA que asiste a un `developer`) y nadie
 más: los otros roles tienen el suyo en `scrumDocs/roles/`. El procedimiento paso a paso
