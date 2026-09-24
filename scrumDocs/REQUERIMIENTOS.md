@@ -1,6 +1,6 @@
 # Requerimientos -- AirDJ
 
-_Generado automaticamente el 2026-09-04T13:55:47.363Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T19:22:27.712Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: HU01 — Activación deliberada del sistema
 
@@ -13,6 +13,10 @@ El sistema deberá permanecer bloqueado por defecto. Solo habilitará la recepci
 • EJECUTANDO
 • COOLDOWN
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-02: RF07 — Validación y prevención de activaciones accidentales (Funcional)
 
 El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar gestos intencionales de movimientos cotidianos. También deberá evitar que un mismo gesto o el movimiento de retorno de la mano genere comandos repetidos.
@@ -22,9 +26,17 @@ El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar g
 • Umbrales mínimos de desplazamiento para gestos dinámicos.
 • Cooldown posterior a una acción.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF04 — Confiabilidad (No funcional)
 
 El sistema deberá minimizar falsos positivos, comandos duplicados y activaciones no intencionales.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-02: HU02 — Confirmación temporal del gesto activador
 
@@ -34,6 +46,10 @@ El sistema deberá reconocer posturas predefinidas de la mano a partir de la con
 • Palma abierta: gesto de activación.
 • Puño cerrado: Play/Pausa.
 • Índice levantado: función adicional configurable.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ### RF-02: RF06 — Activación y control de estados (Funcional)
 
@@ -45,6 +61,10 @@ El sistema deberá permanecer bloqueado por defecto. Solo habilitará la recepci
 • EJECUTANDO
 • COOLDOWN
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-03: RF07 — Validación y prevención de activaciones accidentales (Funcional)
 
 El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar gestos intencionales de movimientos cotidianos. También deberá evitar que un mismo gesto o el movimiento de retorno de la mano genere comandos repetidos.
@@ -54,9 +74,17 @@ El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar g
 • Umbrales mínimos de desplazamiento para gestos dinámicos.
 • Cooldown posterior a una acción.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF04 — Confiabilidad (No funcional)
 
 El sistema deberá minimizar falsos positivos, comandos duplicados y activaciones no intencionales.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-03: HU03 — Ventana temporal de comandos
 
@@ -69,9 +97,17 @@ El sistema deberá permanecer bloqueado por defecto. Solo habilitará la recepci
 • EJECUTANDO
 • COOLDOWN
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF03 — Tiempo de respuesta (No funcional)
 
 La activación, el reconocimiento del gesto y la ejecución de la acción deberán producirse con una latencia suficientemente baja para que la interacción resulte natural.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-04: HU04 — Control de reproducción mediante gestos
 
@@ -82,6 +118,10 @@ El sistema deberá reconocer posturas predefinidas de la mano a partir de la con
 • Puño cerrado: Play/Pausa.
 • Índice levantado: función adicional configurable.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-02: RF08 — Generación y ejecución de comandos multimedia (Funcional)
 
 El sistema deberá asociar cada gesto válido con una acción multimedia y ejecutar el comando correspondiente sobre un reproductor real o una simulación del mismo.
@@ -91,9 +131,17 @@ El sistema deberá asociar cada gesto válido con una acción multimedia y ejecu
 • Pinza pulgar-índice → Volumen.
 • Índice → función adicional configurable.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF02 — Interacción sin contacto (No funcional)
 
 Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contacto físico con el dispositivo.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-05: HU05 — Cambio de canción mediante movimiento de la mano
 
@@ -102,6 +150,10 @@ Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contact
 El sistema deberá analizar la posición de la mano a lo largo de varios frames para identificar movimientos laterales deliberados.
 • Swipe hacia la derecha: siguiente canción.
 • Swipe hacia la izquierda: canción anterior.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ### RF-02: RF07 — Validación y prevención de activaciones accidentales (Funcional)
 
@@ -112,6 +164,10 @@ El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar g
 • Umbrales mínimos de desplazamiento para gestos dinámicos.
 • Cooldown posterior a una acción.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-03: RF08 — Generación y ejecución de comandos multimedia (Funcional)
 
 El sistema deberá asociar cada gesto válido con una acción multimedia y ejecutar el comando correspondiente sobre un reproductor real o una simulación del mismo.
@@ -121,9 +177,17 @@ El sistema deberá asociar cada gesto válido con una acción multimedia y ejecu
 • Pinza pulgar-índice → Volumen.
 • Índice → función adicional configurable.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF02 — Interacción sin contacto (No funcional)
 
 Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contacto físico con el dispositivo.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-06: HU06 — Regreso a la canción anterior
 
@@ -136,6 +200,10 @@ El sistema deberá asociar cada gesto válido con una acción multimedia y ejecu
 • Pinza pulgar-índice → Volumen.
 • Índice → función adicional configurable.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-02: RF07 — Validación y prevención de activaciones accidentales (Funcional)
 
 El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar gestos intencionales de movimientos cotidianos. También deberá evitar que un mismo gesto o el movimiento de retorno de la mano genere comandos repetidos.
@@ -145,21 +213,37 @@ El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar g
 • Umbrales mínimos de desplazamiento para gestos dinámicos.
 • Cooldown posterior a una acción.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-03: RF04 — Reconocimiento de gestos dinámicos (Funcional)
 
 El sistema deberá analizar la posición de la mano a lo largo de varios frames para identificar movimientos laterales deliberados.
 • Swipe hacia la derecha: siguiente canción.
 • Swipe hacia la izquierda: canción anterior.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF02 — Interacción sin contacto (No funcional)
 
 Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contacto físico con el dispositivo.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-07: HU07 — Control gestual del volumen
 
 ### RF-01: RF05 — Control gestual continuo del volumen (Funcional)
 
 El sistema deberá calcular la distancia relativa entre pulgar e índice y convertirla en un valor proporcional de volumen dentro de un rango definido.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ### RF-02: RF08 — Generación y ejecución de comandos multimedia (Funcional)
 
@@ -170,13 +254,25 @@ El sistema deberá asociar cada gesto válido con una acción multimedia y ejecu
 • Pinza pulgar-índice → Volumen.
 • Índice → función adicional configurable.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-03: RNF01 — Facilidad de uso (No funcional)
 
 El usuario deberá poder utilizar el sistema sin conocimientos técnicos específicos.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-04: RNF02 — Interacción sin contacto (No funcional)
 
 Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contacto físico con el dispositivo.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-08: HU08 — Funciones adicionales
 
@@ -187,6 +283,10 @@ El sistema deberá reconocer posturas predefinidas de la mano a partir de la con
 • Puño cerrado: Play/Pausa.
 • Índice levantado: función adicional configurable.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-02: RF08 — Generación y ejecución de comandos multimedia (Funcional)
 
 El sistema deberá asociar cada gesto válido con una acción multimedia y ejecutar el comando correspondiente sobre un reproductor real o una simulación del mismo.
@@ -196,9 +296,17 @@ El sistema deberá asociar cada gesto válido con una acción multimedia y ejecu
 • Pinza pulgar-índice → Volumen.
 • Índice → función adicional configurable.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF08 — Escalabilidad (No funcional)
 
 La arquitectura deberá permitir incorporar nuevos gestos, nuevas acciones y otros reproductores o dispositivos.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-09: HU09 — Reconocimiento confiable
 
@@ -211,13 +319,25 @@ El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar g
 • Umbrales mínimos de desplazamiento para gestos dinámicos.
 • Cooldown posterior a una acción.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF04 — Confiabilidad  (No funcional)
 
 El sistema deberá minimizar falsos positivos, comandos duplicados y activaciones no intencionales.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-02: RNF05 — Robustez (No funcional)
 
 El reconocimiento deberá tolerar variaciones moderadas de iluminación, posición y distancia de la mano respecto de la cámara.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-10: HU10 — Prevención de comandos repetidos
 
@@ -230,6 +350,10 @@ El sistema deberá permanecer bloqueado por defecto. Solo habilitará la recepci
 • EJECUTANDO
 • COOLDOWN
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-02: RF07 — Validación y prevención de activaciones accidentales (Funcional)
 
 El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar gestos intencionales de movimientos cotidianos. También deberá evitar que un mismo gesto o el movimiento de retorno de la mano genere comandos repetidos.
@@ -239,9 +363,17 @@ El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar g
 • Umbrales mínimos de desplazamiento para gestos dinámicos.
 • Cooldown posterior a una acción.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF04 — Confiabilidad (No funcional)
 
 El sistema deberá minimizar falsos positivos, comandos duplicados y activaciones no intencionales.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-11: HU11 — Zona de interacción controlada
 
@@ -254,6 +386,10 @@ El sistema deberá permanecer bloqueado por defecto. Solo habilitará la recepci
 • EJECUTANDO
 • COOLDOWN
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RF-02: RF07 — Validación y prevención de activaciones accidentales (Funcional)
 
 El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar gestos intencionales de movimientos cotidianos. También deberá evitar que un mismo gesto o el movimiento de retorno de la mano genere comandos repetidos.
@@ -263,9 +399,17 @@ El sistema deberá aplicar mecanismos temporales y espaciales para diferenciar g
 • Umbrales mínimos de desplazamiento para gestos dinámicos.
 • Cooldown posterior a una acción.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF04 — Confiabilidad (No funcional)
 
 El sistema deberá minimizar falsos positivos, comandos duplicados y activaciones no intencionales.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-12: HU12 — Confirmación visual del estado y la acción
 
@@ -273,13 +417,25 @@ El sistema deberá minimizar falsos positivos, comandos duplicados y activacione
 
 El sistema deberá informar visualmente el estado actual, el progreso del gesto de activación, el gesto reconocido y la acción ejecutada, permitiendo al usuario comprender en todo momento qué está interpretando AirDJ.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF01 — Facilidad de uso (No funcional)
 
 El usuario deberá poder utilizar el sistema sin conocimientos técnicos específicos.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-02: RNF06 — Claridad de interacción (No funcional)
 
 El sistema deberá informar visualmente su estado para que el usuario sepa cuándo está bloqueado, cuándo está activándose y cuándo acepta comandos.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## HU-13: HU13 — Uso sin contacto físico
 
@@ -292,13 +448,25 @@ El sistema deberá asociar cada gesto válido con una acción multimedia y ejecu
 • Pinza pulgar-índice → Volumen.
 • Índice → función adicional configurable.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-01: RNF01 — Facilidad de uso (No funcional)
 
 El usuario deberá poder utilizar el sistema sin conocimientos técnicos específicos.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ### RNF-02: RNF02 — Interacción sin contacto (No funcional)
 
 Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contacto físico con el dispositivo.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## RO-01: RF01 — Adquisición y procesamiento de video
 
@@ -306,11 +474,19 @@ Los comandos principales deberán poder ejecutarse sin teclado, mouse ni contact
 
 El sistema deberá recibir video desde una cámara, procesar sus frames y mantener un flujo continuo de imágenes para el análisis en tiempo real.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ## RO-02: RF02 — Detección y representación de la mano
 
 ### RF-01: RF02 — Detección y representación de la mano (Funcional)
 
 El sistema deberá detectar la presencia de una mano, extraer sus landmarks y obtener coordenadas normalizadas o relativas que permitan analizar su postura y movimiento.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
 
 ## RO-03: RNF07 — Modularidad
 
@@ -318,8 +494,16 @@ El sistema deberá detectar la presencia de una mano, extraer sus landmarks y ob
 
 El sistema deberá desarrollarse mediante módulos independientes para facilitar pruebas, mantenimiento y futuras mejoras.
 
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
 ## RO-04: RNF09 — Privacidad
 
 ### RF-01: RNF09 — Privacidad (Funcional)
 
 El sistema deberá priorizar el procesamiento local del video y no requerirá almacenamiento permanente de las imágenes capturadas.
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
